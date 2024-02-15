@@ -39,17 +39,48 @@
                     <label for="floatingAge" >Age</label>
                   </div>
                   <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="floatingProvince" placeholder="Province">
+                    <select class="form-select" id="floatingWard" aria-label="Ward">
+                      <option value="">Select Province</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="5">6</option>
+                      <option value="5">7</option>
+
+                  </select>
                     <label for="floatingProvince">Province</label>
                   </div>
                   <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingDistrict" placeholder="District">
-                    <label for="floatingDistrict" >District</label>
-                  </div>
-                  <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="floatingMunicipality" placeholder="Municipality">
-                    <label for="floating">Municipality</label>
-                  </div>
+                    <select class="form-select" id="floatingDistrict" aria-label="District">
+                        <option value="">Select District</option>
+                        <option value="Birgunj">Parsa</option>
+                        <option value="Kathmandu">Kathmandu</option>
+                        <option value="Chitwan">Chitwan</option>
+                        <option value="Pokhara">Pokhara</option>
+                    </select>
+                    <label for="floatingDistrict">District</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingCity" placeholder="city">
+                  <label for="floatingCity" >City/Village</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingMunicipality" aria-label="Municipality">
+                        <option value="">Select Municipality</option>
+                        <option value="1">Birgunj Metropolitan City</option>
+                        <option value="2">Bahudarmai Municipality</option>
+                        <option value="3">Parsagadhi Municipality</option>
+                        <option value="4">Pokhariya Municipality</option>
+                        <option value="5">Bindabasini Rural Municipality</option>
+                        <option value="6">Dhobini Rural Municipality</option>
+                    </select>
+                    <label for="floatingMunicipality">Municipality</label>
+                </div>
+                
+                
                   <div class="form-floating mb-3">
                     <select class="form-select" id="floatingWard" aria-label="Ward">
                         <option value="">Select Ward number</option>
