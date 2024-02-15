@@ -36,29 +36,39 @@ const sendOTP = async(request,response)=>{
 };
 
 const afterOtpVerified = async (request,response)=>{
-
+    console.log("inside afterotp is verified");
 try{
-    let {first_name,middle_name,last_name,age,city,address,district,password} = request.session.formData;
-    const createNewUser = await userModel.create({
-        firstName:first_name,
-        middleName:middle_name,
-        lastName:last_name,
-        age:age,
-        district:district,
-        address:address,
-        email:email,
-        password:password,
-        city:city,
-    });
-    if(createNewUser){
-        request.session.formData = null;
-        request.session.userData = createNewUser; 
-        return response.redirect("/rojgar/welcome");
-    }
-    request.session.formData = null;
-    return response.status(401).json({success:false,message:"some error occurred please register again cannot save userData into database"});
+    let {province,municipality,district,city,address,ward} = request.body;
+    console.log(province,municipality,district,city,address,parseInt(ward.slice(1,-1)));
+    const formData = request.session.formData || {};
+    formData.province = province;
+    formData.municipality = municipality;
+    formData.district = district;
+    formData.city = city;
+    formData.address = address;
+    formData.ward = parseInt(ward.slice(1,-1));
+    request.formData = formData;
+    console.log(formData);
+    // const createNewUser = await userModel.create({
+    //     firstName:first_name,
+    //     middleName:middle_name,
+    //     lastName:last_name,
+    //     age:age,
+    //     district:district,
+    //     address:address,
+    //     email:email,
+    //     password:password,
+    //     city:city,
+    // });
+    // if(createNewUser){
+    //     request.session.formData = null;
+    //     request.session.userData = createNewUser; 
+    //     return response.redirect("/rojgar/welcome");
+    // }
+    // request.session.formData = null;
+    // return response.status(401).json({success:false,message:"some error occurred please register again cannot save userData into database"});
 }catch(error){
-    request.session.formData = null;
+    // request.session.formData = null;
     return response.status(500).json({success:false,message:"some error occurred please register again"});
 }
 }
@@ -68,9 +78,10 @@ try{
 const Register = async (request,response)=>{
 
     try{
-        let {first_name,middle_name,last_name,email,password} = request.body;
-        console.log(first_name,middle_name,last_name,email,password);
-        if(!first_name|| !middle_name|| !last_name|| !email || !password){
+        let {first_name,middle_name,last_name,age,role,email,password} = request.body;
+        // console.log(first_name,role,middle_name,last_name,email,password);
+        if(!first_name|| !middle_name|| !last_name|| !email || !password || !role || !age){
+            request.session.errorMessage
              return response.status(403).json({success:false,message:"All fields are required"});
         }
         if(!email.includes("@gmail.com")){
@@ -84,7 +95,7 @@ const Register = async (request,response)=>{
         }
         //let's store the data into session temporarily
          request.session.formData = {
-            first_name,middle_name,last_name,email,password
+            first_name,middle_name,last_name,role,age,email,password
         };
             console.log("session created",request.session.formData);
 
@@ -105,13 +116,12 @@ const Register = async (request,response)=>{
 
 
 
-const verifyOTP = async(request,response)=>{
+const verifyOTP = async (request,response)=>{
     try{
 
         let { email, otp1, otp2, otp3, otp4, otp5, otp6 }= request.body;
         // console.log(otp1,otp2);
         const otpCode = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
-
         console.log(email);
         if(!email){
             request.session.formData = null;
@@ -125,6 +135,7 @@ const verifyOTP = async(request,response)=>{
             if(findOTPFROMDATABASE.otp !== otpCode){
                 return response.status(401).json({success:false,message:"OTP not matched please provide correct otp"});
             }
+            return response.redirect('/rojgar/register-2');
         }
     }catch(error){
       console.error(error.message);

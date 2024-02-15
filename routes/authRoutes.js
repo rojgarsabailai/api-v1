@@ -1,15 +1,20 @@
 const express = require("express");
 const path = require("path");
 const routes = express.Router();
-const {Login,Register,ForgotPassword,verifyOTP} = require("../controller/auth_controller/loginRegister");
+const {Login,Register,ForgotPassword,verifyOTP,afterOtpVerified} = require("../controller/auth_controller/loginRegister");
 const jobPosting = 
 
 
 
 //GET ROUTES
-routes.route("/register").get((request,response)=>{
+
+routes.route("/register-1").get((request,response)=>{
     // Adjust the path to point to the register.ejs file inside the views directory
-    response.render(path.join(__dirname, '..', 'views', 'sign-up'));
+    response.render(path.join(__dirname, '..', 'views', '1sign-up'));
+});
+routes.route("/register-2").get((request,response)=>{
+    // Adjust the path to point to the register.ejs file inside the views directory
+    response.render(path.join(__dirname, '..', 'views', '2sign-up'));
 });
 routes.route("/login").get((request,response)=>{
     // Adjust the path to point to the register.ejs file inside the views directory
@@ -39,6 +44,7 @@ routes.route("/otp-verify").get((request,response)=>{
 routes.route("/api/v1/login").post(Login);
 routes.route("/api/v1/register").post(Register);
 routes.route("/api/v1/verify-otp").post(verifyOTP);
+routes.route("/api/v1/register-2").post(afterOtpVerified);
 routes.route("/api/v1/forgetpassword").post(ForgotPassword);
 
 module.exports = routes;

@@ -39,7 +39,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/rojgar",auth);
 
 app.get('/', (request, response) => {
-    response.render('index', {foo: 'FOO'});
+    console.log(path.join(__dirname,'views', 'index'));
+    response.render(path.join(__dirname,'views', 'index'));
 });
 
 app.listen(port,()=>{
