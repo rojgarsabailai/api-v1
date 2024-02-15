@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const userModel = require("../../database/models/auth.model");
 const otpModel = require("../../database/models/otp.model");
 const otpGenerator = require("otp-generator");
-
+const tempAuthModel = require("../../database/models/temporary.auth.model");
 
 
 const Login = async(request,response)=>{
@@ -19,14 +19,14 @@ const sendOTP = async(request,response)=>{
 
         const findUser = await userModel.findOne({email});
         if(findUser){
-            request.session.formData = null; // until resend otp option is not created
+            // request.session.formData = null; // until resend otp option is not created
             return response.status(401).json({success:false,message:"Otp is already sent please re-send the otp if you haven't received it"});
         }
         let otp = otpGenerator.generate(6,{upperCaseAlphabets:false,lowerCaseAlphabets:false,specialChars:false});
         let otpObjectForDB = {email,otp};
         const createOTPINDB = await otpModel.create(otpObjectForDB);
         if(!createOTPINDB){
-            request.session.formData = null;
+            // request.session.formData = null;
             return response.status(403).json({success:true,message:"OTP not generated"});
         }
     }
@@ -35,43 +35,57 @@ const sendOTP = async(request,response)=>{
     }
 };
 
+
+
 const afterOtpVerified = async (request,response)=>{
     console.log("inside afterotp is verified");
-try{
-    let {province,municipality,district,city,address,ward} = request.body;
-    console.log(province,municipality,district,city,address,parseInt(ward.slice(1,-1)));
-    const formData = request.session.formData || {};
-    formData.province = province;
-    formData.municipality = municipality;
-    formData.district = district;
-    formData.city = city;
-    formData.address = address;
-    formData.ward = parseInt(ward.slice(1,-1));
-    request.formData = formData;
-    console.log(formData);
-    // const createNewUser = await userModel.create({
-    //     firstName:first_name,
-    //     middleName:middle_name,
-    //     lastName:last_name,
-    //     age:age,
-    //     district:district,
-    //     address:address,
-    //     email:email,
-    //     password:password,
-    //     city:city,
-    // });
-    // if(createNewUser){
-    //     request.session.formData = null;
-    //     request.session.userData = createNewUser; 
-    //     return response.redirect("/rojgar/welcome");
-    // }
-    // request.session.formData = null;
-    // return response.status(401).json({success:false,message:"some error occurred please register again cannot save userData into database"});
-}catch(error){
-    // request.session.formData = null;
-    return response.status(500).json({success:false,message:"some error occurred please register again"});
+// try{
+      let {province,municipality,district,city,address,ward} = request.body;
+      //let's first merge the datas into request body and tempAuthModel
+      console.log("step 1",request.body);
+      await  tempAuthModel.findOne({}).then((tempData) => {
+        if (tempData) {
+            // Merge data from tempAuthModel and request.body
+            // console.log("step2",...tempData.toObject());
+            const mergedData = {
+                ...tempData.toObject(), // Convert Mongoose document to plain JavaScript object
+                province,
+                municipality,
+                district,
+                city,
+                address,
+                ward
+            };
+    
+            // Create new document in userModel with merged data
+         const createUser = userModel.create(mergedData).then((createdData) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    console.log('New document created:', createdData);
+                }
+            }).catch((error)=>{
+                console.log(error);
+            }).finally(()=>{
+                tempAuthModel.deleteMany({}).catch((err) => {
+                    if (err) {
+                        console.error('Error deleting documents:', err);
+                    } else {
+                        console.log('All documents deleted successfully');
+                    }
+                });
+                return response.redirect("/rojgar/postjob");
+            });
+        }
+    });
+
+
 }
-}
+// catch(error){
+//     // request.session.formData = null;
+//     return response.status(500).json({success:false,message:"some error occurred please register again"});
+// }
+// }
 
 
 
@@ -81,7 +95,7 @@ const Register = async (request,response)=>{
         let {first_name,middle_name,last_name,age,role,email,password} = request.body;
         // console.log(first_name,role,middle_name,last_name,email,password);
         if(!first_name|| !middle_name|| !last_name|| !email || !password || !role || !age){
-            request.session.errorMessage
+            // request.session.errorMessage
              return response.status(403).json({success:false,message:"All fields are required"});
         }
         if(!email.includes("@gmail.com")){
@@ -93,17 +107,22 @@ const Register = async (request,response)=>{
         if(checkingIfUserExists){
             return response.status(400).json({success:false,message:"User already exists please login"});
         }
-        //let's store the data into session temporarily
-         request.session.formData = {
-            first_name,middle_name,last_name,role,age,email,password
-        };
-            console.log("session created",request.session.formData);
+        //let's store the data into database temporarily
+        //  request.session.formData = {
+        //     first_name,middle_name,last_name,role,age,email,password
+        // };
+        const createTempAuth = await tempAuthModel.create({
+            firstName:first_name,middleName:middle_name,lastName:last_name,role,age,email,password
+        })
+        if(!createTempAuth){
+            return response.status(402).json({success:false,message:"cannot save the temporary data into database please try again"});
+        }
 
         //now let's send the otp
-        sendOTP(request,response).finally(()=>{
+        await sendOTP(request,response).finally(()=>{
                 response.redirect(`/rojgar/otp-verify?email=${email}`); // Redirect to OTP verification page
         }).catch((err)=>{
-            request.session.formData = null;
+            
             return response.status(500).json({success:false,message:err});
         })
 
@@ -124,7 +143,7 @@ const verifyOTP = async (request,response)=>{
         const otpCode = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
         console.log(email);
         if(!email){
-            request.session.formData = null;
+            // request.session.formData = null;
             return response.status(401).json({success:false,message:"no email found"});
         }
         if(email){

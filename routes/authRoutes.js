@@ -13,25 +13,29 @@ routes.route("/register-1").get((request,response)=>{
     response.render(path.join(__dirname, '..', 'views', '1sign-up'));
 });
 routes.route("/register-2").get((request,response)=>{
-    // Adjust the path to point to the register.ejs file inside the views directory
+
     response.render(path.join(__dirname, '..', 'views', '2sign-up'));
 });
 routes.route("/login").get((request,response)=>{
-    // Adjust the path to point to the register.ejs file inside the views directory
+
     response.render(path.join(__dirname, '..', 'views', 'login'));
 });
 routes.route("/forget-password").get((request,response)=>{
-    // Adjust the path to point to the register.ejs file inside the views directory
+
     response.render(path.join(__dirname, '..', 'views', 'forget-password'));
 });
 routes.route("/new-password").get((request,response)=>{
-    // Adjust the path to point to the register.ejs file inside the views directory
+
     response.render(path.join(__dirname, '..', 'views', 'new-password'));
 });
 
 routes.route("/otp-verify").get((request,response)=>{
-    // Adjust the path to point to the register.ejs file inside the views directory
+
     response.render(path.join(__dirname, '..', 'views', 'otp-verify'),{ email: request.query.email });
+});
+
+routes.route("/postjob").get((request,response)=>{
+    response.render(path.join(__dirname,'..','views','postjob'))
 });
 
 

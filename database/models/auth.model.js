@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema({
         required:true,
         trim:true,
     },
-    muncipality:{
+    municipality:{
         type:String,
         required:true,
         trim:true,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
         trim:true,
     },
     ward:{
-        type:Number,
+        type:String,
         required:true,
         trim:true,
     },
