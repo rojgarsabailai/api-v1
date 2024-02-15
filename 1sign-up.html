@@ -13,8 +13,9 @@
 <body>
     <section class="wrapper">
         <div class="container">
-            <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 text-center">
-                <div class="logo">
+            <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
+
+            <div class="logo">
                     <img src="assets/img/login_sign/logo.png" class="img-fluid"  alt="Logo">
                 </div>
                 <form class = "rounded bg-white shadow p-5"action="">
@@ -22,22 +23,36 @@
                     <div class="fw-normal text-muted mb-3">
                         Already have an account? <a href="login.html" class="text-primary fw-bold text-decoration-none">Sign in here</a>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name">
-                        <label for="floatingFirstName">First Name</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name">
+                              <label for="floatingFirstName">First Name</label>
+                          </div>
                       </div>
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingMiddleName" placeholder="Middle Name">
-                        <label for="floatingMiddleName">Middle Name</label>
+                      <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="floatingMiddleName" placeholder="Middle Name">
+                              <label for="floatingMiddleName">Middle Name</label>
+                          </div>
                       </div>
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name">
-                        <label for="floatingLastName">Last Name</label>
+                  </div>
+                  
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name">
+                              <label for="floatingLastName">Last Name</label>
+                          </div>
                       </div>
-                      <div class="form-floating mb-3">
-                        <input type="number" class="form-control" id="floatingAge" placeholder="Age" min="18">
-                        <label for="floatingAge" >Age</label>
+                      <div class="col-md-6">
+                          <div class="form-floating mb-3">
+                              <input type="number" class="form-control" id="floatingAge" placeholder="Age" min="18">
+                              <label for="floatingAge" >Age</label>
+                          </div>
                       </div>
+                  </div>
+                  
                       <div class="form-floating mb-3">
                         <select class="form-select" id="floatingRole" aria-label="Role">
                             <option value="">Select Role</option>
