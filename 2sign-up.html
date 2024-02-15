@@ -13,9 +13,8 @@
 <body>
     <section class="wrapper">
         <div class="container">
-            <div class="col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 text-center">
-
-            <div class="logo">
+            <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4 text-center">
+                <div class="logo">
                     <img src="assets/img/login_sign/logo.png" class="img-fluid"  alt="Logo">
                 </div>
                 <form class = "rounded bg-white shadow p-5"action="">
@@ -23,68 +22,65 @@
                     <div class="fw-normal text-muted mb-3">
                         Already have an account? <a href="login.html" class="text-primary fw-bold text-decoration-none">Sign in here</a>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="floatingFirstName" placeholder="First Name">
-                              <label for="floatingFirstName">First Name</label>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="floatingMiddleName" placeholder="Middle Name">
-                              <label for="floatingMiddleName">Middle Name</label>
-                          </div>
-                      </div>
-                  </div>
-                  
-                  <div class="row">
-                      <div class="col-md-6">
-                          <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="floatingLastName" placeholder="Last Name">
-                              <label for="floatingLastName">Last Name</label>
-                          </div>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-floating mb-3">
-                              <input type="number" class="form-control" id="floatingAge" placeholder="Age" min="18">
-                              <label for="floatingAge" >Age</label>
-                          </div>
-                      </div>
-                  </div>
-                  
-                      <div class="form-floating mb-3">
-                        <select class="form-select" id="floatingRole" aria-label="Role">
-                            <option value="">Select Role</option>
-                            <option value="Birgunj">Employer</option>
-                            <option value="Kathmandu">Job Provider</option>
-                        </select>
-                        <label for="floatingRole">Your Role</label>
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingWard" aria-label="Ward">
+                      <option value="">Select Province</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="5">6</option>
+                      <option value="5">7</option>
 
-                      </div>
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Password</label>
-                        <span class="password-info mt-2">Use 8 or more characters with a mix of letters, numbers & symbols.</span>
-                      </div>
-                      <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Password">
-                        <label for="floatingConfirmPassword">Confirm Password</label>
-                      </div>
-
-                      <div class="form-check d-flex align-items-center">
-                        <input class="form-check-input" type="checkbox" id="autoSizingCheck2" checked>
-                        <label class="form-check-label ms-2" for="autoSizingCheck2">
-                          I agree <a href="#">Terms and conditions</a>.
-                        </label>
-                      </div>
-                      <button type="submit" class="btn btn-primary submit_btn my-4">Next</button>
-                      <button type="submit" class="btn btn-secondary submit_btn my-4 ms-3">Cancel</button>
-                    
+                  </select>
+                    <label for="floatingProvince">Province</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingDistrict" aria-label="District">
+                        <option value="">Select District</option>
+                        <option value="Birgunj">Parsa</option>
+                        <option value="Kathmandu">Kathmandu</option>
+                        <option value="Chitwan">Chitwan</option>
+                        <option value="Pokhara">Pokhara</option>
+                    </select>
+                    <label for="floatingDistrict">District</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingCity" placeholder="city">
+                  <label for="floatingCity" >City/Village</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingMunicipality" aria-label="Municipality">
+                        <option value="">Select Municipality</option>
+                        <option value="1">Birgunj Metropolitan City</option>
+                        <option value="2">Bahudarmai Municipality</option>
+                        <option value="3">Parsagadhi Municipality</option>
+                        <option value="4">Pokhariya Municipality</option>
+                        <option value="5">Bindabasini Rural Municipality</option>
+                        <option value="6">Dhobini Rural Municipality</option>
+                    </select>
+                    <label for="floatingMunicipality">Municipality</label>
+                </div>
+          
+                  <div class="form-floating mb-3">
+                    <select class="form-select" id="floatingWard" aria-label="Ward">
+                        <option value="">Select Ward number</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <label for="floatingWard">Ward number</label>
+                </div>
+                
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingTole" placeholder="Tole">
+                    <label for="floatingTole" >Address</label>
+                  </div>
+                      <button type="submit" class="btn btn-primary submit_btn w-100 my-4">Continue</button>
                       
                 </form>
             </div>
