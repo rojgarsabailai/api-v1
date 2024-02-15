@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password?</title>
+    <title>Create an Account?</title>
     <link rel="manifest" href="site.webmanifest">
 	<link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
@@ -19,14 +19,30 @@
                     <img src="assets/img/login_sign/logo.png" class="img-fluid"  alt="Logo">
                 </div>
                 <form class = "rounded bg-white shadow p-5"action="">
-                    <h3 class="text-dark fw-bolder fs-4 mb-2">Forget Password?</h3>
+                    <h3 class="text-dark fw-bolder fs-4 mb-2">Create an Account?</h3>
                     <div class="fw-normal text-muted mb-4">
-                        Enter your email to reset your password.
+                        Enter your email to receive OTP and continue to create account.
                     </div>
-                    
+
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Email address</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                        <span class="password-info mt-2">Use 8 or more characters with a mix of letters, numbers & symbols.</span>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Password">
+                        <label for="floatingConfirmPassword">Confirm Password</label>
+                      </div>
+
+                      <div class="form-check d-flex align-items-center">
+                        <input class="form-check-input" type="checkbox" id="autoSizingCheck2" checked>
+                        <label class="form-check-label ms-2" for="autoSizingCheck2">
+                          I agree <a href="#">Terms and conditions</a>.
+                        </label>
                       </div>
                       
                       <button type="submit" class="btn btn-primary submit_btn my-4">Submit</button>
