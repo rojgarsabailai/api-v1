@@ -1,7 +1,8 @@
 const express = require("express");
+const path = require("path");
 const routes = express.Router();
 const {Login,Register,ForgotPassword,verifyOTP} = require("../controller/auth_controller/loginRegister");
-const path = require("path");
+const jobPosting = 
 
 
 
@@ -39,4 +40,5 @@ routes.route("/api/v1/login").post(Login);
 routes.route("/api/v1/register").post(Register);
 routes.route("/api/v1/verify-otp").post(verifyOTP);
 routes.route("/api/v1/forgetpassword").post(ForgotPassword);
+
 module.exports = routes;

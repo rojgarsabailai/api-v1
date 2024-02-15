@@ -31,7 +31,17 @@ const userSchema = new mongoose.Schema({
         required:true,
         trim:true,
     },
+    muncipality:{
+        type:String,
+        required:true,
+        trim:true,
+    },
     district:{
+        type:String,
+        required:true,
+        trim:true,
+    },
+    ward:{
         type:String,
         required:true,
         trim:true,
@@ -46,11 +56,13 @@ const userSchema = new mongoose.Schema({
         required:true,
         trim:true,
     },
+
     role:{
     type:String,
-    enum:['Admin','Official','User'],
-    default:'User',
-    }
+    enum:['Admin','employer','employee'],
+    },
+
+
 });
 
 const userModel = mongoose.model('User',userSchema);
