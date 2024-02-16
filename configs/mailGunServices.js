@@ -13,7 +13,7 @@ const sendEmail = async (to,otp)=>{
         
         const messageData = {
             from:"Rojgar Sabailai <nepal@rojgar-sabailai.tech>",
-            to:`${ to || 'naitikgupta12@gmail.com'}`,
+            to:`${ to || 'naitikrauniyar@outlook.com'}`,
             subject:"Please verify your account",
             text:`your otp is ${otp || 'your otp is 12' }`
         };

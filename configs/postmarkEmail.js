@@ -9,7 +9,7 @@ const sendEmail = async()=>{
         "From": "subarnamiyer@gmail.com",
         "To": "naitikgupta12@gmail.com",
         "Subject": "Test",
-        "TextBody": "Hello testing email services"
+        "TextBody": "Hello testing email service"
     }).then((response)=>{
         console.log(response);
     }).catch((error)=>{

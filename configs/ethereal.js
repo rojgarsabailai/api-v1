@@ -5,8 +5,8 @@ const mainEmailFunction = async(otp)=>{
             host: 'smtp.ethereal.email',
             port: 587,
             auth: {
-                user: 'roma24@ethereal.email',
-                pass: 'SxMkSN1jZ2vhvcNqGZ'
+                user: process.env.etheralUser,
+                pass: process.env.etheralPassword
             }
         });
         let info = await transporter.sendMail({
