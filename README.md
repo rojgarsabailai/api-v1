@@ -23,7 +23,7 @@ Rojgar Sabailai is a freelancing platform designed to connect unskilled and semi
 - **Database**: MongoDB
 - **Session Management**: Express Session, Connect MongoDB Session
 - **Authentication**: bcrypt
-- **Deployment**: Heroku
+- **Deployment**: Azure
 
 ## Installation
 
