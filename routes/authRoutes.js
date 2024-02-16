@@ -4,8 +4,19 @@ const routes = express.Router();
 const {Login,Register,ForgotPassword,verifyOTP,afterOtpVerified} = require("../controller/auth_controller/loginRegister");
 const authenticationCheck = require("../middlewares/auth/authentication.middleware");
 const authorizationCheck = require("../middlewares/authorization/authorization.role");
+const userModel = require("../database/models/auth.model");
 
 //GET ROUTES
+
+routes.route('/').get((request, response) => {
+    try{
+        const userData = request.session.userID;
+        response.render(path.join(__dirname,'..','views', 'index'),{userData});
+    }catch(error){
+        response.status(500).json({success:false,message:"something went wrong please reload the page"});
+    }
+    
+});
 
 routes.route("/register-1").get((request,response)=>{
     // Adjust the path to point to the register.ejs file inside the views directory
@@ -35,6 +46,24 @@ routes.route("/otp-verify").get((request,response)=>{
 
 routes.route("/postjob").get(authenticationCheck,authorizationCheck("employer"),(request,response)=>{
     response.render(path.join(__dirname,'..','views','postjob'));
+});
+
+routes.route("/findjob").get(authenticationCheck,authorizationCheck("employee"),(request,response)=>{
+    response.render(path.join(__dirname,'..','views','job_listing'));
+});
+
+routes.route("/profile").get(authenticationCheck,async (request,response)=>{
+
+    try {
+        const userData = request.session.userID;
+        const findUser = await userModel.findById(userData);
+        if(!findUser){
+            return response.status(404).json({success:false,message:"User data not found please try to logout and login again"});
+        }
+        response.render(path.join(__dirname,'..','views','profile'),{findUser});
+    } catch (error) {
+        response.status(500).json({success:false,message:"Could not load this page please try again"});
+    }
 });
 
 routes.route("/admin-dashboard").get(authenticationCheck,authorizationCheck("admin"),(request,response)=>{

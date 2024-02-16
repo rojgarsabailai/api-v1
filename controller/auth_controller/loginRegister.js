@@ -1,4 +1,3 @@
-
 const bcrypt = require('bcrypt');
 const userModel = require("../../database/models/auth.model");
 const otpModel = require("../../database/models/otp.model");
@@ -7,7 +6,24 @@ const tempAuthModel = require("../../database/models/temporary.auth.model");
 
 
 const Login = async(request,response)=>{
-    console.log("login page");
+    const {email,password} = request.body;
+    if(!email || !password){
+        return response.status(404).json({success:false,message:"email or password is missing please try again"});
+    };
+
+    const findUser = await userModel.findOne({email});
+    if(findUser.password != password){
+        return response.status().json({sucess:false,message:"Please enter correct password and try again"});
+    }
+
+    request.session.userID = findUser._id;
+    if(findUser.role === 'employer'){
+        return response.redirect("/rojgar/postjob");
+    }else if(findUser.role === 'employee'){
+        return response.redirect("/rojgar/findjob");
+    }else if(findUser.role === 'admin'){
+        return response.redirect("/rojgar/admin-dashboard");
+    }
 };
 
 const sendOTP = async(request,response)=>{

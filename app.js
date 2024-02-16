@@ -45,10 +45,7 @@ if(store){
 
 
 
-app.get('/', (request, response) => {
-    console.log(path.join(__dirname,'views', 'index'));
-    response.render(path.join(__dirname,'views', 'index'));
-});
+
 app.use("/rojgar",auth);
 app.listen(port,()=>{
     console.log(`connected to port ${port}`);
