@@ -2,9 +2,8 @@ const express = require("express");
 const path = require("path");
 const routes = express.Router();
 const {Login,Register,ForgotPassword,verifyOTP,afterOtpVerified} = require("../controller/auth_controller/loginRegister");
-const jobPosting = 
-
-
+const authenticationCheck = require("../middlewares/auth/authentication.middleware");
+const authorizationCheck = require("../middlewares/authorization/authorization.role");
 
 //GET ROUTES
 
@@ -34,11 +33,13 @@ routes.route("/otp-verify").get((request,response)=>{
     response.render(path.join(__dirname, '..', 'views', 'otp-verify'),{ email: request.query.email });
 });
 
-routes.route("/postjob").get((request,response)=>{
-    response.render(path.join(__dirname,'..','views','postjob'))
+routes.route("/postjob").get(authenticationCheck,authorizationCheck("employer"),(request,response)=>{
+    response.render(path.join(__dirname,'..','views','postjob'));
 });
 
-
+routes.route("/admin-dashboard").get(authenticationCheck,authorizationCheck("admin"),(request,response)=>{
+    response.send({sucess:true,message:"checking authorization"});
+});
 
 
 
