@@ -16,5 +16,9 @@ routes.route('/your-job-listings').get(async(request,response)=>{
     }
 });
 
+routes.route("/my-employees").get((request,response)=>{
+    response.render(path.join(__dirname,'..','views','people-who-applied-for-job'));
+});
+
 
 module.exports = routes;

@@ -13,7 +13,7 @@ const mainFunction = async()=>{
        });
        let info = await transporter.sendMail({
            from: 'rojgarsabailai@gmail.com',
-           to: "subarnamiyer@gmail.com",
+           to: "naitikgupta12@gmail.com",
            subject: "Hello",
            text: "Testing some Mailgun awesomness"
        }).then((response)=>{
