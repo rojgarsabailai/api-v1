@@ -6,6 +6,8 @@ const session = require('express-session');
 const mongoDBStore = require("connect-mongodb-session")(session);
 const connectDB = require("./database/connection/connectDB");
 const auth = require("./routes/authRoutes");
+const employerRoute = require("./routes/employer.route");
+const employeeRoute = require("./routes/employee.route");
 const path = require("path");
 const port = process.env.PORT || 5500;
 const userModel = require("./database/models/auth.model");
@@ -39,9 +41,6 @@ if(store){
     }));
 }
 
-// Set up session middleware
-
-
 
 app.get('/', async(request, response) => {
 try {
@@ -56,7 +55,18 @@ try {
     response.status(500).json({success:false,message:"server internal error please try to reload the page"});
 }
 });
+
+//adding routes
 app.use("/rojgar",auth);
+app.use("/rojgar",employeeRoute);
+app.use("/rojgar",employerRoute);
+
+
+
+
+
+
+//start the app
 app.listen(port,()=>{
     console.log(`connected to port ${port}`);
 });

@@ -57,6 +57,16 @@ routes.route("/profile").get(authenticationCheck,async (request,response)=>{
     }
 });
 
+
+routes.route("/job-description").get((request,response)=>{
+    try {
+        response.render(path.join(__dirname,'..','views','job_details'));
+    } catch (error) {
+        response.status(500).json({success:false,message:"Something went wrong server error",error});
+    }
+});
+
+
 routes.route("/admin-dashboard").get(authenticationCheck,authorizationCheck("admin"),(request,response)=>{
     response.send({sucess:true,message:"checking authorization"});
 });
