@@ -7,22 +7,33 @@ const tempAuthModel = require("../../database/models/temporary.auth.model");
 
 const Login = async(request,response)=>{
     const {email,password} = request.body;
-    if(!email || !password){
-        return response.status(404).json({success:false,message:"email or password is missing please try again"});
-    };
-
-    const findUser = await userModel.findOne({email});
-    if(findUser.password != password){
-        return response.status().json({sucess:false,message:"Please enter correct password and try again"});
-    }
-
-    request.session.userID = findUser._id;
-    if(findUser.role === 'employer'){
-        return response.redirect("/rojgar/postjob");
-    }else if(findUser.role === 'employee'){
-        return response.redirect("/rojgar/findjob");
-    }else if(findUser.role === 'admin'){
-        return response.redirect("/rojgar/admin-dashboard");
+    try {
+        if(!email || !password){
+            return response.status(404).json({success:false,message:"email or password is missing please try again"});
+        };
+    
+        const findUser = await userModel.findOne({email});
+        if(findUser.password != password){
+            return response.status(404).json({sucess:false,message:"Please enter correct password and try again"});
+        }
+    
+        request.session.userID = findUser._id;
+        request.session.save((err) => {
+            if (err) {
+                console.error('Error saving session:', err);
+                response.status(500).send('Internal Server Error');
+            } else {
+                if (findUser.role === 'employer') {
+                   return response.redirect("/rojgar/postjob");
+                } else if (findUser.role === 'employee') {
+                  return  response.redirect("/rojgar/findjob");
+                } else if (findUser.role === 'admin') {
+                   return response.redirect("/rojgar/admin-dashboard");
+                }
+            }
+        });
+    } catch (error) {
+        response.send(error);
     }
 };
 
@@ -55,7 +66,7 @@ const sendOTP = async(request,response)=>{
 
 const afterOtpVerified = async (request,response)=>{
     console.log("inside afterotp is verified");
-// try{
+try{
       let {province,municipality,district,city,address,ward} = request.body;
       //let's first merge the datas into request body and tempAuthModel
       console.log("step 1",request.body);
@@ -75,11 +86,8 @@ const afterOtpVerified = async (request,response)=>{
     
             // Create new document in userModel with merged data
          const createUser = userModel.create(mergedData).then((createdData) => {
-                if (err) {
-                    console.error(err);
-                } else {
                     console.log('New document created:', createdData);
-                }
+
             }).catch((error)=>{
                 console.log(error);
             }).finally(()=>{
@@ -90,18 +98,18 @@ const afterOtpVerified = async (request,response)=>{
                         console.log('All documents deleted successfully');
                     }
                 });
-                return response.redirect("/rojgar/postjob");
+                return response.redirect("/rojgar/login");
             });
         }
     });
 
 
 }
-// catch(error){
-//     // request.session.formData = null;
-//     return response.status(500).json({success:false,message:"some error occurred please register again"});
-// }
-// }
+catch(error){
+    // request.session.formData = null;
+    return response.status(500).json({success:false,message:"some error occurred please register again"});
+}
+}
 
 
 
@@ -115,7 +123,7 @@ const Register = async (request,response)=>{
              return response.status(403).json({success:false,message:"All fields are required"});
         }
         if(!email.includes("@gmail.com")){
-            return response(402).json({success:false,message:"Please provide correct email address"});
+            return response.status(402).json({success:false,message:"Please provide correct email address"});
         }
         // now let's check if user already exists
         const checkingIfUserExists = await userModel.findOne({email});
@@ -180,4 +188,21 @@ const ForgotPassword = async(request,response)=>{
     console.log("forgot password page");
 };
 
-module.exports = {Login,Register,verifyOTP,ForgotPassword,afterOtpVerified};
+
+const logout = async(request,response)=>{
+    console.log("inside logout");
+try {
+    request.session.destroy((err) => {
+        if (err) {
+            console.error('Error while trying to logout:', err);
+            response.status(500).send('Internal Server Error');
+        } else {
+            response.redirect('/'); // Redirect to the home page or any other desired page
+        }
+    });
+} catch (error) {
+    
+}
+};
+
+module.exports = {Login,Register,verifyOTP,ForgotPassword,afterOtpVerified,logout};

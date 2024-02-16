@@ -30,7 +30,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="/assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="/"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="/"><img src="/assets/img/logo/logo.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -54,19 +54,36 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
-                                            <li><a href="/rojgar/postjob">Post a Job</a>
-                                            </li>
+                                            <li><a href="/">Home</a></li>
+                                            <% if(findUser) {%>
+                                                <% if (findUser.role === 'employee') { %>
+                                                    <li><a href="job_listing.html">Find a Jobs</a></li>
+                                                <% } %>
+                                                <li><a href="about.html">About</a></li>
+                                                <% if (findUser.role === 'employer') { %>
+                                                    <li><a href="/rojgar/postjob">Post a Job</a></li>
+                                                <% } %>
+                                            <%}%>
                                             <li><a href="#">Contact</a></li>
+                                            <% if(!findUser) {%>
+                                                <li><a href="#">About</a></li>
+                                                <li><a href="#">Feedback</a></li>
+                                            <%}%>
+
                                         </ul>
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="/rojgar/register-1" class="btn head-btn1">Register</a>
-                                    <a href="/rojgar/login" class="btn head-btn2">Login</a>
+                                    <% if (!findUser) { %>
+                                        <a href="/rojgar/register-1" class="btn head-btn1">Register</a>
+                                        <a href="/rojgar/login" class="btn head-btn2">Login</a>
+                                    <% } %>
+                                   <% if(findUser)  {%>
+                                    <form action="/rojgar/api/v1/logout" method="post">
+                                        <button class="btn head-btn2">Logout</button>
+                                       </form>
+                                       <%}%>
                                 </div>
                             </div>
                         </div>
@@ -148,39 +165,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="fas fa-trash"></span>
-                            </div>
-                            <div class="flaticon-water-meter">
-                               <h5><a href="job_listing.html">Cleaning</a></h5>
-                                <span>(XXX)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-report"></span>
-                            </div>
-                            <div class="services-cap">
-                               <h5><a href="job_listing.html">Sales & Marketing</a></h5>
-                                <span>(XXX)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="fas fa-home"></span>
-                            </div>
-                            <div class="services-cap">
-                               <h5><a href="job_listing.html">Home Delivery</a></h5>
-                                <span>(XXX)</span>
-                            </div>
-                        </div>
-                    </div>
+
+
+
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-services text-center mb-30">
                             <div class="services-ion">
@@ -203,17 +190,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-services text-center mb-30">
-                            <div class="services-ion">
-                                <span class="flaticon-real-estate"></span>
-                            </div>
-                            <div class="services-cap">
-                               <h5><a href="job_listing.html">Real Estate</a></h5>
-                                <span>(XXX)</span>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <div class="single-services text-center mb-30">
                             <div class="services-ion">
@@ -231,7 +208,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="browse-btn2 text-center mt-50">
-                            <a href="job_listing.html" class="border-btn2">Browse All Sectors</a>
+                            <a href="#" class="border-btn2">Browse All Sectors</a>
                         </div>
                     </div>
                 </div>
@@ -274,7 +251,7 @@
                                     <a href="job_details.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
                                 </div>
                                 <div class="job-tittle">
-                                    <a href="job_details.html"><h4>Home Deliever</h4></a>
+                                    <a href="job_details.html"><h4>Garden Cleaning</h4></a>
                                     <ul>
                                         <li>Online Shopping</li>
                                         <li><i class="fas fa-map-marker-alt"></i> Birgunj</li>
@@ -420,7 +397,7 @@
                             <div class="support-caption">
                                 <p class="pera-top">Our project aims to connect semi-skilled workers from villages directly with job hirers.</p>
                                 <p>By facilitating communication, addressing technology gaps, and emphasizing direct interaction, we empower individuals to secure meaningful employment opportunities</p>
-                                <a href="about.html" class="btn post-btn">Post a job</a>
+                                <a href="#" class="btn post-btn">Post a job</a>
                             </div>
                         </div>
                     </div>

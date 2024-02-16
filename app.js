@@ -8,6 +8,7 @@ const connectDB = require("./database/connection/connectDB");
 const auth = require("./routes/authRoutes");
 const path = require("path");
 const port = process.env.PORT || 5500;
+const userModel = require("./database/models/auth.model");
 app.set('view engine', 'ejs');
 
 // Serve static files from the public directory
@@ -42,10 +43,19 @@ if(store){
 
 
 
-
-
-
-
+app.get('/', async(request, response) => {
+try {
+    const userData = request.session.userID;
+    const findUser = await userModel.findById(userData);
+    if(!findUser){
+        console.log("no user data found please log in");
+    }
+    console.log(path.join(__dirname,'views', 'index'));
+    response.render(path.join(__dirname,'views', 'index'),{findUser});
+} catch (error) {
+    response.status(500).json({success:false,message:"server internal error please try to reload the page"});
+}
+});
 app.use("/rojgar",auth);
 app.listen(port,()=>{
     console.log(`connected to port ${port}`);

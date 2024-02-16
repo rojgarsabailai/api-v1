@@ -1,22 +1,13 @@
 const express = require("express");
 const path = require("path");
 const routes = express.Router();
-const {Login,Register,ForgotPassword,verifyOTP,afterOtpVerified} = require("../controller/auth_controller/loginRegister");
+const {Login,Register,ForgotPassword,verifyOTP,afterOtpVerified,logout} = require("../controller/auth_controller/loginRegister");
 const authenticationCheck = require("../middlewares/auth/authentication.middleware");
 const authorizationCheck = require("../middlewares/authorization/authorization.role");
 const userModel = require("../database/models/auth.model");
 
 //GET ROUTES
 
-routes.route('/').get((request, response) => {
-    try{
-        const userData = request.session.userID;
-        response.render(path.join(__dirname,'..','views', 'index'),{userData});
-    }catch(error){
-        response.status(500).json({success:false,message:"something went wrong please reload the page"});
-    }
-    
-});
 
 routes.route("/register-1").get((request,response)=>{
     // Adjust the path to point to the register.ejs file inside the views directory
@@ -79,6 +70,7 @@ routes.route("/api/v1/login").post(Login);
 routes.route("/api/v1/register").post(Register);
 routes.route("/api/v1/verify-otp").post(verifyOTP);
 routes.route("/api/v1/register-2").post(afterOtpVerified);
+routes.route("/api/v1/logout").post(logout);
 routes.route("/api/v1/forgetpassword").post(ForgotPassword);
 
 module.exports = routes;
